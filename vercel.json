@@ -1,0 +1,25 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "devCommand": "npm run dev",
+  "outputDirectory": ".next",
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "env": {
+    "DATABASE_URL": "@database_url",
+    "REBRICKABLE_API_KEY": "@rebrickable_api_key"
+  },
+  "build": {
+    "env": {
+      "DATABASE_URL": "@database_url",
+      "REBRICKABLE_API_KEY": "@rebrickable_api_key"
+    }
+  },
+  "regions": ["iad1"],
+  "cleanUrls": true,
+  "trailingSlash": false
+}

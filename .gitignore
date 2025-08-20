@@ -137,3 +137,28 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Project specific
+.env.local
+.env.production
+.env.development
+*.md
+!README.md
+!CLAUDE.md
+
+# Vercel
+.vercel
+
+# Prisma
+prisma/migrations/*.sql
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Set {
+  id              Int      @id @default(autoincrement())
+  setNumber       String   @unique @map("set_number") @db.VarChar(20)
+  dateAdded       DateTime @default(now()) @map("date_added")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  
+  // Web search fallback tracking
+  source          String   @default("rebrickable") @db.VarChar(20) // 'rebrickable' | 'web_search' | 'manual'
+  confidence      Int      @default(100) // 0-100 confidence score for web search results
+  manualOverride  Boolean  @default(false) @map("manual_override") // true if user edited web search data
+
+  @@index([setNumber], map: "idx_sets_set_number")
+  @@index([source], map: "idx_sets_source")
+  @@map("sets")
+}

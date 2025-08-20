@@ -1,0 +1,51 @@
+{
+  "name": "mylegos",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "db:push": "dotenv -e .env.local -- prisma db push",
+    "db:generate": "prisma generate",
+    "db:deploy": "prisma db push",
+    "import:csv": "dotenv -e .env.local -- tsx scripts/import-csv.ts",
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma generate && next build"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
+    "@mantine/core": "^7.15.0",
+    "@mantine/form": "^8.2.4",
+    "@mantine/hooks": "^7.15.0",
+    "@mantine/modals": "^7.15.0",
+    "@mantine/notifications": "^7.15.0",
+    "@prisma/client": "^5.22.0",
+    "@tabler/icons-react": "^3.34.1",
+    "@tanstack/react-query": "^5.62.6",
+    "next": "14.2.18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.0",
+    "zod": "^3.23.8",
+    "zustand": "^5.0.2"
+  },
+  "devDependencies": {
+    "@tanstack/react-query-devtools": "^5.84.2",
+    "@types/node": "^20.17.6",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.20",
+    "csv-parse": "^6.1.0",
+    "dotenv-cli": "^10.0.0",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "14.2.18",
+    "postcss": "^8.5.4",
+    "prisma": "^5.22.0",
+    "tailwindcss": "^3.4.15",
+    "tsx": "^4.20.3",
+    "typescript": "^5.7.2"
+  }
+}
