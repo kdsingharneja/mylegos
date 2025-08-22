@@ -47,44 +47,32 @@ export function AppHeader({
   return (
     <>
       {/* Header with yellow background */}
-      <div className="sticky top-0 z-10 relative overflow-hidden" style={{ backgroundColor: '#FFD700', maxHeight: '150px' }}>
+      <div className="sticky top-0 z-10 relative overflow-hidden header-background max-h-[150px]">
         {/* Background Logo Container */}
-        <div 
-          className="absolute right-0 top-0 bottom-0"
-          style={{
-            width: '400px',
-            height: '150px',
-            backgroundImage: 'url(/images/legos.svg)',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'right center',
-            backgroundSize: 'cover',
-            opacity: 1,
-            zIndex: 1
-          }}
-        />
+        <div className="absolute right-0 top-0 bottom-0 header-logo-background" />
         
         <Container size="xl" px="md" className="relative z-10">
-          <div className="flex items-center justify-between py-6" style={{ minHeight: '150px' }}>
+          <div className="flex items-center justify-between py-6 min-h-[150px]">
             {/* Title and Counter on Left */}
             <div className="flex-1 pr-4">
               <Text 
                 size="40px" 
                 fw={700} 
-                style={{ color: 'black', lineHeight: 1.2 }}
+                className="header-title"
               >
                 My Lego Collection
               </Text>
               <Text 
                 size="24px" 
                 fw={600}
-                style={{ color: 'red' }}
+                className="header-counter"
               >
                 {totalSets} {totalSets === 1 ? 'set' : 'sets'} in your collection
               </Text>
             </div>
             
             {/* Empty space for logo background */}
-            <div className="flex-shrink-0" style={{ width: '300px' }}>
+            <div className="flex-shrink-0 w-[300px]">
               {/* This space allows the background logo to show */}
             </div>
           </div>
@@ -136,7 +124,7 @@ export function AppHeader({
                 size="lg"
                 onClick={() => onSortOrderChange(sortOrder === 'asc' ? 'desc' : 'asc')}
                 title={`Sort ${sortOrder === 'asc' ? 'descending' : 'ascending'}`}
-                style={{ backgroundColor: 'white', border: '1px solid #374151' }}
+                className="header-nav-input"
               >
                 {sortOrder === 'asc' ? (
                   <IconSortAscending size={20} />

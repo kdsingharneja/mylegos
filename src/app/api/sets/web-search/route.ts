@@ -1,22 +1,60 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { z } from 'zod';
 
-const confirmWebSearchSchema = z.object({
-  setNumber: z.string().min(1, 'Set number is required'),
-  name: z.string().min(1, 'Name is required'),
-  year: z.number().min(1958).max(new Date().getFullYear() + 2),
-  num_parts: z.number().min(0).max(20000),
-  theme: z.string().optional(),
-  set_img_url: z.string().optional(),
-  confidence: z.number().min(0).max(100),
-});
+// Simple validation function for web search data
+function validateWebSearchData(data: any): { valid: boolean; error?: string; data?: any } {
+  if (!data || typeof data !== 'object') {
+    return { valid: false, error: 'Request body must be an object' };
+  }
+
+  // Validate required fields
+  if (typeof data.setNumber !== 'string' || data.setNumber.trim().length === 0) {
+    return { valid: false, error: 'Set number is required' };
+  }
+  
+  if (typeof data.name !== 'string' || data.name.trim().length === 0) {
+    return { valid: false, error: 'Name is required' };
+  }
+
+  if (typeof data.year !== 'number' || data.year < 1958 || data.year > new Date().getFullYear() + 2) {
+    return { valid: false, error: 'Year must be between 1958 and ' + (new Date().getFullYear() + 2) };
+  }
+
+  if (typeof data.num_parts !== 'number' || data.num_parts < 0 || data.num_parts > 20000) {
+    return { valid: false, error: 'Number of parts must be between 0 and 20000' };
+  }
+
+  if (typeof data.confidence !== 'number' || data.confidence < 0 || data.confidence > 100) {
+    return { valid: false, error: 'Confidence must be between 0 and 100' };
+  }
+
+  // Optional fields
+  if (data.theme && typeof data.theme !== 'string') {
+    return { valid: false, error: 'Theme must be a string' };
+  }
+
+  if (data.set_img_url && typeof data.set_img_url !== 'string') {
+    return { valid: false, error: 'Image URL must be a string' };
+  }
+
+  return { valid: true, data };
+}
 
 // POST /api/sets/web-search - Save confirmed web search result
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const webSearchData = confirmWebSearchSchema.parse(body);
+    
+    // Validate the request body
+    const validation = validateWebSearchData(body);
+    if (!validation.valid) {
+      return NextResponse.json(
+        { error: validation.error },
+        { status: 400 }
+      );
+    }
+    
+    const webSearchData = validation.data;
 
     // Check if set already exists
     const existingSet = await prisma.set.findUnique({
@@ -55,12 +93,6 @@ export async function POST(request: NextRequest) {
     }, { status: 201 });
 
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: 'Invalid request data', details: error.errors },
-        { status: 400 }
-      );
-    }
 
     console.error('Error saving web search result:', error);
     return NextResponse.json(

@@ -2,11 +2,25 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { RebrickableService } from '@/services/rebrickable';
 import { LegoSearchService } from '@/services/legoSearchService';
-import { z } from 'zod';
 
-const addSetSchema = z.object({
-  setNumber: z.string().min(1, 'Set number is required'),
-});
+// Simple validation function to replace Zod
+function validateSetNumber(setNumber: unknown): { valid: boolean; error?: string; data?: string } {
+  if (typeof setNumber !== 'string') {
+    return { valid: false, error: 'Set number must be a string' };
+  }
+  
+  const trimmed = setNumber.trim();
+  if (trimmed.length === 0) {
+    return { valid: false, error: 'Set number is required' };
+  }
+  
+  // Basic LEGO set number validation (typically 4-6 digits, sometimes with suffix)
+  if (!/^\d{4,6}(-\d+)?$/.test(trimmed)) {
+    return { valid: false, error: 'Set number must be a valid LEGO set format (e.g., 21034, 75192-1)' };
+  }
+  
+  return { valid: true, data: trimmed };
+}
 
 // GET /api/sets - Get all sets from database
 export async function GET() {
@@ -92,7 +106,17 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { setNumber } = addSetSchema.parse(body);
+    
+    // Validate the request body
+    const validation = validateSetNumber(body.setNumber);
+    if (!validation.valid) {
+      return NextResponse.json(
+        { error: validation.error },
+        { status: 400 }
+      );
+    }
+    
+    const setNumber = validation.data!;
 
     // Check if set already exists
     const existingSet = await prisma.set.findUnique({
@@ -124,12 +148,6 @@ export async function POST(request: NextRequest) {
     }, { status: 201 });
 
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: 'Invalid request data', details: error.errors },
-        { status: 400 }
-      );
-    }
 
     if (error instanceof Error && error.message.includes('not found')) {
       return NextResponse.json(

@@ -1,16 +1,40 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { RebrickableService } from '@/services/rebrickable';
-import { z } from 'zod';
 
-const validateSetSchema = z.object({
-  setNumber: z.string().min(1, 'Set number is required'),
-});
+// Simple validation function for set numbers
+function validateSetNumber(setNumber: unknown): { valid: boolean; error?: string; data?: string } {
+  if (typeof setNumber !== 'string') {
+    return { valid: false, error: 'Set number must be a string' };
+  }
+  
+  const trimmed = setNumber.trim();
+  if (trimmed.length === 0) {
+    return { valid: false, error: 'Set number is required' };
+  }
+  
+  // Basic LEGO set number validation (typically 4-6 digits, sometimes with suffix)
+  if (!/^\d{4,6}(-\d+)?$/.test(trimmed)) {
+    return { valid: false, error: 'Set number must be a valid LEGO set format (e.g., 21034, 75192-1)' };
+  }
+  
+  return { valid: true, data: trimmed };
+}
 
 // POST /api/sets/validate - Validate and preview a set before adding
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { setNumber } = validateSetSchema.parse(body);
+    
+    // Validate the request body
+    const validation = validateSetNumber(body.setNumber);
+    if (!validation.valid) {
+      return NextResponse.json({
+        valid: false,
+        error: validation.error,
+      });
+    }
+    
+    const setNumber = validation.data!;
 
     // Fetch set data from Rebrickable API
     const legoData = await RebrickableService.getSetByNumber(setNumber);
@@ -21,12 +45,6 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: 'Invalid request data', details: error.errors },
-        { status: 400 }
-      );
-    }
 
     if (error instanceof Error && error.message.includes('not found')) {
       return NextResponse.json({

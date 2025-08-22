@@ -1,3 +1,90 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom Component Styles */
+@layer components {
+  /* Header Styles */
+  .header-background {
+    background-color: #FFD700;
+  }
+  
+  .header-logo-background {
+    width: 400px;
+    height: 150px;
+    background-image: url(/images/legos.svg);
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: cover;
+    opacity: 1;
+    z-index: 1;
+  }
+  
+  .header-title {
+    color: black;
+    line-height: 1.2;
+  }
+  
+  .header-counter {
+    color: red !important;
+  }
+  
+  .header-nav-input {
+    background-color: white;
+    border: 1px solid #374151;
+  }
+  
+  /* Page Background */
+  .page-background {
+    background-color: #111827;
+  }
+  
+  /* Card Styles */
+  .card-background {
+    background-color: #1F2937;
+    border-color: #374151;
+    border: 1px solid #374151;
+  }
+  
+  .card-title {
+    color: #FACC15;
+    height: 3.5rem;
+  }
+  
+  .card-set-number {
+    color: #60A5FA;
+  }
+  
+  .card-delete-icon {
+    color: #F87171;
+  }
+  
+  .card-year-badge {
+    background-color: #60A5FA;
+    color: white;
+  }
+  
+  .card-pieces-text {
+    color: #9CA3AF;
+  }
+  
+  .card-web-search-badge {
+    background-color: #EC4899;
+    color: white;
+  }
+  
+  .card-date-text {
+    color: #6B7280;
+  }
+  
+  /* Card Hover Effects */
+  .card-hover {
+    transition: all 0.2s ease;
+  }
+  
+  .card-hover:hover {
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    transform: scale(1.02) translateY(-2px);
+    border-color: #60A5FA;
+  }
+}

@@ -38,20 +38,7 @@ export function SetCard({ set }: SetCardProps) {
       padding="lg" 
       radius="md" 
       withBorder 
-      className="hover:shadow-xl hover:scale-[1.02] transition-all duration-200 min-h-96 flex flex-col"
-      style={{ 
-        backgroundColor: '#1F2937',
-        borderColor: '#374151',
-        border: '1px solid #374151'
-      }}
-      styles={{
-        root: {
-          '&:hover': {
-            borderColor: '#60A5FA',
-            transform: 'translateY(-2px)'
-          }
-        }
-      }}
+      className="card-background card-hover min-h-96 flex flex-col"
     >
       <Card.Section>
         <div className="set-image-container relative w-full h-48 md:h-44 lg:h-56 xl:h-60 overflow-hidden rounded-t-md bg-white">
@@ -79,9 +66,8 @@ export function SetCard({ set }: SetCardProps) {
           <div className="flex-1 min-w-0">
             <Text 
               fw={500} 
-              className="text-lg leading-tight" 
+              className="text-lg leading-tight card-title" 
               lineClamp={2}
-              style={{ color: '#FACC15', height: '3.5rem' }}
             >
               {set.name}
             </Text>
@@ -91,8 +77,7 @@ export function SetCard({ set }: SetCardProps) {
             onClick={handleDelete}
             loading={deleteSet.isPending}
             size="sm"
-            style={{ color: '#F87171' }}
-            className="hover:bg-red-100"
+            className="card-delete-icon hover:bg-red-100"
           >
             <IconTrash size={16} />
           </ActionIcon>
@@ -102,7 +87,7 @@ export function SetCard({ set }: SetCardProps) {
         <Group gap="xs" align="center" className="mb-3">
           <Text 
             size="sm" 
-            style={{ color: '#60A5FA' }}
+            className="card-set-number"
           >
             Set #{set.set_num || set.setNumber}
           </Text>
@@ -111,10 +96,7 @@ export function SetCard({ set }: SetCardProps) {
               variant="filled" 
               size="xs" 
               leftSection={<IconSearch size={10} />}
-              style={{ 
-                backgroundColor: '#EC4899',
-                color: 'white'
-              }}
+              className="card-web-search-badge"
               title={`Web Search Result (${set.confidence}% confidence)`}
             >
               Web Search
@@ -129,10 +111,7 @@ export function SetCard({ set }: SetCardProps) {
               variant="filled" 
               size="sm" 
               leftSection={<IconCalendar size={12} />}
-              style={{ 
-                backgroundColor: '#60A5FA',
-                color: 'white'
-              }}
+              className="card-year-badge"
             >
               {set.year}
             </Badge>
@@ -140,7 +119,7 @@ export function SetCard({ set }: SetCardProps) {
           {set.num_parts > 0 && (
             <Text 
               size="sm" 
-              style={{ color: '#9CA3AF' }}
+              className="card-pieces-text"
             >
               {set.num_parts} pieces
             </Text>
@@ -149,7 +128,7 @@ export function SetCard({ set }: SetCardProps) {
 
         {/* Footer at bottom */}
         <div className="mt-auto">
-          <Text size="xs" style={{ color: '#6B7280' }}>
+          <Text size="xs" className="card-date-text">
             Added {new Date(set.dateAdded).toLocaleDateString()}
           </Text>
         </div>
@@ -165,12 +144,7 @@ export function SetCardSkeleton() {
       padding="lg" 
       radius="md" 
       withBorder 
-      className="min-h-96 flex flex-col"
-      style={{ 
-        backgroundColor: '#1F2937',
-        borderColor: '#374151',
-        border: '1px solid #374151'
-      }}
+      className="min-h-96 flex flex-col card-background"
     >
       <Card.Section>
         <div className="set-image-container w-full h-48 md:h-44 lg:h-56 xl:h-60 bg-white">

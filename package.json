@@ -16,7 +16,6 @@
     "vercel-build": "prisma generate && next build"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.10.0",
     "@mantine/core": "^7.15.0",
     "@mantine/form": "^8.2.4",
     "@mantine/hooks": "^7.15.0",
@@ -27,10 +26,7 @@
     "@tanstack/react-query": "^5.62.6",
     "next": "14.2.18",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-hook-form": "^7.54.0",
-    "zod": "^3.23.8",
-    "zustand": "^5.0.2"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^5.84.2",

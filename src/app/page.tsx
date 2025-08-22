@@ -24,7 +24,7 @@ export default function HomePage() {
   const { data: sets = [] } = useSets();
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#111827' }}>
+    <div className="min-h-screen page-background">
       <AppHeader
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -35,7 +35,7 @@ export default function HomePage() {
         totalSets={sets.length}
       />
 
-      <Container size="xl" py="xl" style={{ backgroundColor: '#111827' }}>
+      <Container size="xl" py="xl" className="page-background">
         <SetsGrid
           searchQuery={searchQuery}
           sortBy={sortBy}
