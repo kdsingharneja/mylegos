@@ -14,29 +14,10 @@
     height: 150px;
     background-image: url(/images/legos.svg);
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: right center;
     background-size: cover;
     opacity: 1;
     z-index: 1;
-  }
-  
-  /* Responsive header logo */
-  @media (max-width: 768px) {
-    .header-logo-background {
-      width: 200px;
-      height: 120px;
-      background-size: contain;
-      background-position: center center;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .header-logo-background {
-      width: 150px;
-      height: 100px;
-      background-size: contain;
-      background-position: center center;
-    }
   }
   
   .header-title {
@@ -46,50 +27,6 @@
   
   .header-counter {
     color: red !important;
-  }
-  
-  /* Responsive text sizing */
-  #header-text {
-    font-size: 40px;
-    font-weight: 700;
-    color: black;
-    line-height: 1.2;
-  }
-  
-  #lego-set-count {
-    font-size: 24px;
-    font-weight: 600;
-    color: red !important;
-  }
-  
-  @media (max-width: 768px) {
-    #header-text {
-      font-size: 28px;
-    }
-    
-    #lego-set-count {
-      font-size: 18px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    #header-text {
-      font-size: 24px;
-    }
-    
-    #lego-set-count {
-      font-size: 16px;
-    }
-  }
-  
-  @media (max-width: 360px) {
-    #header-text {
-      font-size: 20px;
-    }
-    
-    #lego-set-count {
-      font-size: 14px;
-    }
   }
   
   .header-nav-input {

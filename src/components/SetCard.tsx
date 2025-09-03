@@ -8,9 +8,10 @@ import { notifications } from '@mantine/notifications';
 
 interface SetCardProps {
   set: SetWithStoredData;
+  isEditMode?: boolean;
 }
 
-export function SetCard({ set }: SetCardProps) {
+export function SetCard({ set, isEditMode = false }: SetCardProps) {
   const deleteSet = useDeleteSet();
 
   const handleDelete = () => {
@@ -72,15 +73,17 @@ export function SetCard({ set }: SetCardProps) {
               {set.name}
             </Text>
           </div>
-          <ActionIcon
-            variant="subtle"
-            onClick={handleDelete}
-            loading={deleteSet.isPending}
-            size="sm"
-            className="card-delete-icon hover:bg-red-100"
-          >
-            <IconTrash size={16} />
-          </ActionIcon>
+          {isEditMode && (
+            <ActionIcon
+              variant="subtle"
+              onClick={handleDelete}
+              loading={deleteSet.isPending}
+              size="sm"
+              className="card-delete-icon hover:bg-red-100"
+            >
+              <IconTrash size={16} />
+            </ActionIcon>
+          )}
         </Group>
 
         {/* Set number with web search pill */}

@@ -24,7 +24,6 @@ interface AppHeaderProps {
   sortOrder: 'asc' | 'desc';
   onSortOrderChange: (order: 'asc' | 'desc') => void;
   totalSets: number;
-  isEditMode: boolean;
 }
 
 export function AppHeader({
@@ -35,7 +34,6 @@ export function AppHeader({
   sortOrder,
   onSortOrderChange,
   totalSets,
-  isEditMode,
 }: AppHeaderProps) {
   const [addModalOpened, setAddModalOpened] = useState(false);
 
@@ -49,22 +47,24 @@ export function AppHeader({
   return (
     <>
       {/* Header with yellow background */}
-      <div className="sticky top-0 z-10 relative overflow-hidden header-background max-h-[150px] md:max-h-[150px] sm:max-h-[120px] max-sm:max-h-[100px]">
+      <div className="sticky top-0 z-10 relative overflow-hidden header-background max-h-[150px]">
         {/* Background Logo Container */}
         <div className="absolute right-0 top-0 bottom-0 header-logo-background" />
         
         <Container size="xl" px="md" className="relative z-10">
-          <div className="flex items-center justify-between py-3 md:py-6 min-h-[100px] md:min-h-[150px] sm:min-h-[120px]">
+          <div className="flex items-center justify-between py-6 min-h-[150px]">
             {/* Title and Counter on Left */}
-            <div className="flex-1 pr-4 flex flex-col justify-center">
+            <div className="flex-1 pr-4">
               <Text 
-                id="header-text"
+                size="40px" 
+                fw={700} 
                 className="header-title"
               >
                 My Lego Collection
               </Text>
               <Text 
-                id="lego-set-count"
+                size="24px" 
+                fw={600}
                 className="header-counter"
               >
                 {totalSets} {totalSets === 1 ? 'set' : 'sets'} in your collection
@@ -72,7 +72,7 @@ export function AppHeader({
             </div>
             
             {/* Empty space for logo background */}
-            <div className="flex-shrink-0 w-[300px] md:w-[300px] sm:w-[200px] max-sm:w-[150px] flex items-center justify-center">
+            <div className="flex-shrink-0 w-[300px]">
               {/* This space allows the background logo to show */}
             </div>
           </div>
@@ -133,17 +133,15 @@ export function AppHeader({
                 )}
               </ActionIcon>
 
-              {isEditMode && (
-                <Button
-                  leftSection={<IconPlus size={16} />}
-                  onClick={() => setAddModalOpened(true)}
-                  color="red"
-                  variant="filled"
-                  size="md"
-                >
-                  Add Set
-                </Button>
-              )}
+              <Button
+                leftSection={<IconPlus size={16} />}
+                onClick={() => setAddModalOpened(true)}
+                color="red"
+                variant="filled"
+                size="md"
+              >
+                Add Set
+              </Button>
             </Group>
           </Flex>
         </Container>

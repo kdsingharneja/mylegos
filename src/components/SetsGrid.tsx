@@ -10,9 +10,10 @@ interface SetsGridProps {
   searchQuery?: string;
   sortBy?: 'date' | 'name' | 'year' | 'setNumber';
   sortOrder?: 'asc' | 'desc';
+  isEditMode?: boolean;
 }
 
-export function SetsGrid({ searchQuery = '', sortBy = 'date', sortOrder = 'desc' }: SetsGridProps) {
+export function SetsGrid({ searchQuery = '', sortBy = 'date', sortOrder = 'desc', isEditMode = false }: SetsGridProps) {
   const { data: sets = [], isLoading, error } = useSets();
 
   // Filter and sort sets
@@ -113,7 +114,7 @@ export function SetsGrid({ searchQuery = '', sortBy = 'date', sortOrder = 'desc'
       verticalSpacing="md"
     >
       {filteredAndSortedSets.map((set) => (
-        <SetCard key={set.id} set={set} />
+        <SetCard key={set.id} set={set} isEditMode={isEditMode} />
       ))}
     </SimpleGrid>
   );
